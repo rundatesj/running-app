@@ -35,11 +35,11 @@ export default function Home() {
     fetchMembers()
   }, [])
 
-  async function fetchMembers() {
-    const { data, error } = await supabase
-      .from('members')
-      .select('*')
-      .order('name')
+async function fetchMembers() {
+  const { data, error } = await supabase
+    .from('members')
+    .select('*')
+    .order('name', { ascending: true })
 
     if (error) {
       alert('이름 목록 불러오기 실패')

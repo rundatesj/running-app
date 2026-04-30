@@ -178,7 +178,7 @@ function RankingSection({ title, data, type = 'total', emptyText }) {
         <div className="text-gray-400">{emptyText}</div>
       ) : (
         <div className="space-y-2">
-          {data.map((item, index) => (
+      {data.slice(0, 10).map((item, index) => (
             <div
               key={item.name}
               className="flex items-center justify-between rounded-lg border p-3"
