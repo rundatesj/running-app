@@ -96,7 +96,7 @@ export default function Home() {
       <div className="mx-auto max-w-md">
         <div className="mb-5">
           <h1 className="text-2xl font-extrabold text-slate-900">
-            5월 러닝 챌린지
+            5월 마일리지 대전 개인전
           </h1>
           <p className="mt-1 text-sm text-slate-500">
             이름, 날짜, 거리만 입력하면 순위에 자동 반영됩니다.

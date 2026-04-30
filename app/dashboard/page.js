@@ -204,7 +204,7 @@ const risingRanking = weekRanking
         <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
           <div>
             <h1 className="text-2xl font-extrabold text-slate-900">
-              5월 러닝 챌린지 대시보드
+              5월 마일리지 대전 항목별 순위
             </h1>
             <p className="mt-1 text-sm text-slate-500">
               거리 · 출석 · 최장거리 기준 실시간 순위
