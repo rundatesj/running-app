@@ -140,12 +140,21 @@ async function fetchMembers() {
           {saving ? '저장 중...' : '기록 저장'}
         </button>
 
-        <Link
-          href="/dashboard"
-          className="block w-full rounded border p-3 text-center font-bold"
-        >
-          순위 대시보드 보기
-        </Link>
+<div className="grid grid-cols-2 gap-2">
+  <Link
+    href="/dashboard"
+    className="block rounded border p-3 text-center font-bold"
+  >
+    순위 보기
+  </Link>
+
+  <Link
+    href="/history"
+    className="block rounded border p-3 text-center font-bold"
+  >
+    전체 기록
+  </Link>
+</div>
       </div>
     </main>
   )
