@@ -133,15 +133,24 @@ export default function Dashboard() {
   return (
     <main className="min-h-screen bg-gray-100 p-4">
       <div className="mx-auto max-w-5xl">
-       <div className="mb-4 flex items-center justify-between gap-3">
+<div className="mb-4 flex flex-wrap items-center justify-between gap-3">
   <h1 className="text-2xl font-bold">5월 러닝 챌린지 대시보드</h1>
 
-  <a
-    href="/"
-    className="rounded border bg-white px-3 py-2 text-sm font-bold"
-  >
-    기록 입력
-  </a>
+  <div className="flex gap-2">
+    <a
+      href="/"
+      className="rounded border bg-white px-3 py-2 text-sm font-bold"
+    >
+      기록 입력
+    </a>
+
+    <a
+      href="/history"
+      className="rounded border bg-white px-3 py-2 text-sm font-bold"
+    >
+      전체 기록
+    </a>
+  </div>
 </div>
 
         <div className="mb-5 grid grid-cols-3 gap-3">
