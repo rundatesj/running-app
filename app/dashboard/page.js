@@ -141,7 +141,52 @@ export default function Dashboard() {
   const todayRanking = makeRanking(todayRuns)
   const todayWinner = todayRanking[0]
   const weekRanking = makeRanking(weekRuns)
+
+const lastWeekStartDate = new Date(week.start)
+lastWeekStartDate.setDate(lastWeekStartDate.getDate() - 7)
+
+const lastWeekEndDate = new Date(week.end)
+lastWeekEndDate.setDate(lastWeekEndDate.getDate() - 7)
+
+const lastWeekStart = formatDate(lastWeekStartDate)
+const lastWeekEnd = formatDate(lastWeekEndDate)
+
+const lastWeekRuns = runs.filter(
+  (r) => r.run_date >= lastWeekStart && r.run_date <= lastWeekEnd
+)
+
+const lastWeekRanking = makeRanking(lastWeekRuns)
+
+const lastWeekRankMap = {}
+
+lastWeekRanking.forEach((item, index) => {
+  lastWeekRankMap[item.name] = index + 1
+})
+
+const risingRanking = weekRanking
+  .map((item, index) => {
+    const currentRank = index + 1
+    const previousRank = lastWeekRankMap[item.name]
+
+    return {
+      ...item,
+      currentRank,
+      previousRank,
+      rise: previousRank ? previousRank - currentRank : null,
+    }
+  })
+  .filter((item) => item.rise === null || item.rise > 0)
+  .sort((a, b) => {
+    if (a.rise === null && b.rise !== null) return -1
+    if (a.rise !== null && b.rise === null) return 1
+    return (b.rise || 0) - (a.rise || 0)
+  })
+
   const totalRanking = makeRanking(runs)
+
+
+
+
   const attendanceRanking = makeRanking(runs, 'attendance')
   const maxRanking = makeRanking(runs, 'max')
 
@@ -210,7 +255,15 @@ export default function Dashboard() {
           theme="emerald"
           getStreakBadge={getStreakBadge}
         />
-
+<RankingSection
+  title="주간 상승 순위"
+  subtitle="지난주 대비 이번주 순위 상승 기준"
+  data={risingRanking}
+  type="rise"
+  emptyText="아직 상승 데이터가 없습니다."
+  theme="rose"
+  getStreakBadge={getStreakBadge}
+/>
         <RankingSection
           title="5월 전체 누적 순위"
           subtitle="5월 1일 ~ 5월 31일 전체 거리 합산"
@@ -339,7 +392,16 @@ function RankingSection({ title, subtitle, data, type = 'total', emptyText, them
                 </div>
 
                 <div className="text-right">
-                  {type === 'attendance' ? (
+                 {type === 'rise' ? (
+  <>
+    <div className={`rounded-full px-3 py-1 text-sm font-extrabold ${style.badge}`}>
+      {item.rise === null ? 'NEW' : `▲ ${item.rise}위`}
+    </div>
+    <div className="mt-1 text-xs text-gray-500">
+      현재 {item.currentRank}위 · {item.total}km
+    </div>
+  </>
+) : type === 'attendance' ? (
                     <>
                       <div className={`rounded-full px-3 py-1 text-sm font-extrabold ${style.badge}`}>
                         {item.attendance}일
