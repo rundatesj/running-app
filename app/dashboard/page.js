@@ -108,6 +108,7 @@ export default function Dashboard() {
   )
 
   const todayRanking = makeRanking(todayRuns)
+const todayWinner = todayRanking[0]
   const weekRanking = makeRanking(weekRuns)
   const totalRanking = makeRanking(runs)
   const attendanceRanking = makeRanking(runs, 'attendance')
@@ -145,6 +146,17 @@ export default function Dashboard() {
         </div>
 
         <div className="mb-6 grid grid-cols-3 gap-3">
+{todayWinner && (
+  <div className="mb-6 overflow-hidden rounded-2xl bg-gradient-to-r from-yellow-400 to-orange-400 p-5 text-white shadow">
+    <div className="text-sm font-bold opacity-90">🏆 오늘의 러너</div>
+    <div className="mt-2 text-2xl font-extrabold">{todayWinner.name}</div>
+    <div className="mt-1 text-lg font-bold">{todayWinner.total}km</div>
+    <div className="mt-2 text-sm opacity-90">
+      오늘 가장 많이 달린 러너입니다.
+    </div>
+  </div>
+)}
+
           <SummaryCard title="참가자" value={`${totalMembers}명`} color="bg-blue-600" />
           <SummaryCard title="총 기록" value={`${totalRecords}건`} color="bg-emerald-600" />
           <SummaryCard title="총 거리" value={`${totalDistance.toFixed(2)}km`} color="bg-violet-600" />
