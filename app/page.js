@@ -16,7 +16,6 @@ function formatDate(date) {
 
 function getDefaultDate() {
   const today = formatDate(new Date())
-
   if (today < CHALLENGE_START) return CHALLENGE_START
   if (today > CHALLENGE_END) return CHALLENGE_END
   return today
@@ -35,11 +34,11 @@ export default function Home() {
     fetchMembers()
   }, [])
 
-async function fetchMembers() {
-  const { data, error } = await supabase
-    .from('members')
-    .select('*')
-    .order('name', { ascending: true })
+  async function fetchMembers() {
+    const { data, error } = await supabase
+      .from('members')
+      .select('*')
+      .order('name', { ascending: true })
 
     if (error) {
       alert('이름 목록 불러오기 실패')
@@ -87,74 +86,89 @@ async function fetchMembers() {
     }
 
     alert('저장 완료!')
-
     setMemberId('')
     setRunDate(getDefaultDate())
     setDistance('')
   }
 
   return (
-    <main className="min-h-screen bg-gray-100 p-5">
-      <div className="mx-auto max-w-md rounded-2xl bg-white p-5 shadow">
-        <h1 className="mb-5 text-2xl font-bold">5월 러닝 챌린지</h1>
+    <main className="min-h-screen bg-gradient-to-b from-slate-100 to-blue-50 p-4">
+      <div className="mx-auto max-w-md">
+        <div className="mb-5">
+          <h1 className="text-2xl font-extrabold text-slate-900">
+            5월 러닝 챌린지
+          </h1>
+          <p className="mt-1 text-sm text-slate-500">
+            이름, 날짜, 거리만 입력하면 순위에 자동 반영됩니다.
+          </p>
+        </div>
 
-        <label className="mb-1 block font-semibold">이름</label>
-        <select
-          className="mb-4 w-full rounded border p-3"
-          value={memberId}
-          onChange={(e) => setMemberId(e.target.value)}
-        >
-          <option value="">이름 선택</option>
-          {members.map((member) => (
-            <option key={member.id} value={member.id}>
-              {member.name}
-            </option>
-          ))}
-        </select>
+        <div className="overflow-hidden rounded-2xl bg-white shadow">
+          <div className="bg-blue-600 px-5 py-4 text-white">
+            <h2 className="text-lg font-extrabold">러닝 기록 입력</h2>
+            <p className="mt-1 text-sm opacity-90">5월 1일 ~ 5월 31일 기록만 입력 가능</p>
+          </div>
 
-        <label className="mb-1 block font-semibold">일자</label>
-        <input
-          type="date"
-          className="mb-4 w-full rounded border p-3"
-          min={CHALLENGE_START}
-          max={maxDate}
-          value={runDate}
-          onChange={(e) => setRunDate(e.target.value)}
-        />
+          <div className="p-5">
+            <label className="mb-1 block font-bold text-slate-700">이름</label>
+            <select
+              className="mb-4 w-full rounded-xl border border-blue-100 bg-blue-50 p-3 outline-none"
+              value={memberId}
+              onChange={(e) => setMemberId(e.target.value)}
+            >
+              <option value="">이름 선택</option>
+              {members.map((member) => (
+                <option key={member.id} value={member.id}>
+                  {member.name}
+                </option>
+              ))}
+            </select>
 
-        <label className="mb-1 block font-semibold">거리 km</label>
-        <input
-          type="text"
-          inputMode="decimal"
-          className="mb-5 w-full rounded border p-3"
-          placeholder="예: 10.60"
-          value={distance}
-          onChange={handleDistanceChange}
-        />
+            <label className="mb-1 block font-bold text-slate-700">일자</label>
+            <input
+              type="date"
+              className="mb-4 w-full rounded-xl border border-emerald-100 bg-emerald-50 p-3 outline-none"
+              min={CHALLENGE_START}
+              max={maxDate}
+              value={runDate}
+              onChange={(e) => setRunDate(e.target.value)}
+            />
 
-        <button
-          onClick={handleSubmit}
-          disabled={saving}
-          className="mb-3 w-full rounded bg-black p-3 font-bold text-white disabled:bg-gray-400"
-        >
-          {saving ? '저장 중...' : '기록 저장'}
-        </button>
+            <label className="mb-1 block font-bold text-slate-700">거리 km</label>
+            <input
+              type="text"
+              inputMode="decimal"
+              className="mb-5 w-full rounded-xl border border-violet-100 bg-violet-50 p-3 outline-none"
+              placeholder="예: 10.60"
+              value={distance}
+              onChange={handleDistanceChange}
+            />
 
-<div className="grid grid-cols-2 gap-2">
-  <Link
-    href="/dashboard"
-    className="block rounded border p-3 text-center font-bold"
-  >
-    순위 보기
-  </Link>
+            <button
+              onClick={handleSubmit}
+              disabled={saving}
+              className="mb-3 w-full rounded-xl bg-slate-900 p-3 font-extrabold text-white shadow disabled:bg-gray-400"
+            >
+              {saving ? '저장 중...' : '기록 저장'}
+            </button>
 
-  <Link
-    href="/history"
-    className="block rounded border p-3 text-center font-bold"
-  >
-    전체 기록
-  </Link>
-</div>
+            <div className="grid grid-cols-2 gap-2">
+              <Link
+                href="/dashboard"
+                className="rounded-xl bg-blue-600 p-3 text-center font-bold text-white shadow"
+              >
+                순위 보기
+              </Link>
+
+              <Link
+                href="/history"
+                className="rounded-xl bg-white p-3 text-center font-bold text-slate-700 shadow border"
+              >
+                누적 기록
+              </Link>
+            </div>
+          </div>
+        </div>
       </div>
     </main>
   )
