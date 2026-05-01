@@ -72,14 +72,19 @@ export default function History() {
             </p>
           </div>
 
-          <div className="flex gap-2">
-            <Link href="/" className="rounded-xl bg-white px-4 py-2 text-sm font-bold text-slate-700 shadow">
-              기록 입력
-            </Link>
-            <Link href="/dashboard" className="rounded-xl bg-slate-900 px-4 py-2 text-sm font-bold text-white shadow">
-              대시보드
-            </Link>
-          </div>
+<div className="flex gap-2">
+  <a href="/" className="rounded-xl bg-white px-4 py-2 text-sm font-bold text-slate-700 shadow">
+    기록 입력
+  </a>
+
+  <a href="/dashboard" className="rounded-xl bg-white px-4 py-2 text-sm font-bold text-slate-700 shadow">
+    대시보드
+  </a>
+
+  <a href="/stats" className="rounded-xl bg-slate-900 px-4 py-2 text-sm font-bold text-white shadow">
+    통계
+  </a>
+</div>
         </div>
 
         <div className="mb-5 grid grid-cols-3 gap-3">

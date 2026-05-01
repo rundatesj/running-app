@@ -211,14 +211,19 @@ const risingRanking = weekRanking
             </p>
           </div>
 
-          <div className="flex gap-2">
-            <a href="/" className="rounded-xl bg-white px-4 py-2 text-sm font-bold text-slate-700 shadow">
-              기록 입력
-            </a>
-            <a href="/history" className="rounded-xl bg-slate-900 px-4 py-2 text-sm font-bold text-white shadow">
-              누적 기록
-            </a>
-          </div>
+<div className="flex gap-2">
+  <a href="/" className="rounded-xl bg-white px-4 py-2 text-sm font-bold text-slate-700 shadow">
+    기록 입력
+  </a>
+
+  <a href="/history" className="rounded-xl bg-white px-4 py-2 text-sm font-bold text-slate-700 shadow">
+    누적 기록
+  </a>
+
+  <a href="/stats" className="rounded-xl bg-slate-900 px-4 py-2 text-sm font-bold text-white shadow">
+    통계
+  </a>
+</div>
         </div>
 
         <div className="mb-6 grid grid-cols-3 gap-3">
