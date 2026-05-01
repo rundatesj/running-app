@@ -65,9 +65,25 @@ export default function StatsPage() {
         <div className="mb-6 overflow-hidden rounded-2xl bg-white shadow">
           <div className="bg-slate-900 px-5 py-4 text-white">
             <div className="text-sm font-bold opacity-90">🏆 크루 누적 레벨</div>
-            <div className="mt-2 text-2xl font-extrabold">
-              LV.{crewLevel.level} {crewLevel.name}
-            </div>
+        <div className="mt-2 flex flex-wrap items-center gap-2 text-2xl font-extrabold">
+  <span>LV.{crewLevel.level} {crewLevel.name}</span>
+
+  <details className="relative inline-block">
+    <summary className="cursor-pointer list-none rounded-full bg-white/20 px-3 py-1 text-sm font-bold">
+      !
+    </summary>
+
+    <div className="absolute left-0 z-50 mt-2 w-64 rounded-xl bg-white p-4 text-sm text-slate-800 shadow-xl">
+      <div className="mb-2 font-extrabold">레벨 기준</div>
+      <div>LV.1 워밍업: 0 ~ 200km</div>
+      <div>LV.2 러닝 시작: 200 ~ 500km</div>
+      <div>LV.3 중독 단계: 500 ~ 1000km</div>
+      <div>LV.4 크루 각성: 1000 ~ 2000km</div>
+      <div>LV.5 괴물 집단: 2000 ~ 3000km</div>
+      <div>LV.6 인간 아님: 3000km 이상</div>
+    </div>
+  </details>
+</div>
             <div className="mt-1 text-sm opacity-90">
               우리가 함께 달린 거리 {totalDistance.toFixed(2)}km
             </div>
