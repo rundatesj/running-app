@@ -225,47 +225,7 @@ const risingRanking = weekRanking
           <SummaryCard title="참가자" value={`${totalMembers}명`} color="bg-blue-600" />
           <SummaryCard title="총 기록" value={`${totalRecords}건`} color="bg-emerald-600" />
           <SummaryCard title="총 거리" value={`${totalDistance.toFixed(2)}km`} color="bg-violet-600" />
-<div className="mb-6 overflow-hidden rounded-2xl bg-white shadow">
-  <div className="bg-slate-900 px-5 py-4 text-white">
-    <div className="text-sm font-bold opacity-90">🏆 크루 누적 레벨</div>
-    <div className="mt-2 text-2xl font-extrabold">
-      LV.{crewLevel.level} {crewLevel.name}
-    </div>
-    <div className="mt-1 text-sm opacity-90">
-      우리가 함께 달린 거리 {totalDistance.toFixed(2)}km
-    </div>
-  </div>
 
-  <div className="p-5">
-    <div className="mb-2 flex justify-between text-sm font-bold text-slate-700">
-      <span>다음 레벨 진행률</span>
-      <span>{crewLevel.progress.toFixed(1)}%</span>
-    </div>
-
-    <div className="mb-4 h-4 overflow-hidden rounded-full bg-slate-100">
-      <div
-        className="h-full rounded-full bg-gradient-to-r from-blue-500 to-violet-500"
-        style={{ width: `${crewLevel.progress}%` }}
-      />
-    </div>
-
-    <div className="grid grid-cols-2 gap-3">
-      <div className="rounded-xl bg-blue-50 p-4 text-center">
-        <div className="text-sm font-bold text-blue-700">운동장</div>
-        <div className="mt-1 text-xl font-extrabold text-blue-900">
-          {crewLevel.trackLaps.toFixed(0)}바퀴
-        </div>
-      </div>
-
-      <div className="rounded-xl bg-violet-50 p-4 text-center">
-        <div className="text-sm font-bold text-violet-700">다음 레벨까지</div>
-        <div className="mt-1 text-xl font-extrabold text-violet-900">
-          {crewLevel.remain.toFixed(1)}km
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 
         </div>
 
