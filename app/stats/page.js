@@ -23,6 +23,7 @@ export default function StatsPage() {
 
   const dailyDistance = makeDailyDistance(runs)
   const dailyParticipants = makeDailyParticipants(runs)
+  const weekdayDistance = makeWeekdayDistance(runs)
 
   const totalDistance = runs.reduce((sum, r) => sum + Number(r.distance), 0)
   const totalRecords = runs.length
@@ -122,6 +123,16 @@ export default function StatsPage() {
           unit="명"
           theme="amber"
         />
+
+        <BarSection
+          title="요일별 누적거리"
+          subtitle="월~일 요일별 전체 러닝거리"
+          data={weekdayDistance}
+          valueKey="distance"
+          labelKey="day"
+          unit="km"
+          theme="emerald"
+        />
       </div>
     </main>
   )
@@ -192,6 +203,30 @@ function makeDailyParticipants(runs) {
     .sort((a, b) => a.date.localeCompare(b.date))
 }
 
+function makeWeekdayDistance(runs) {
+  const weekdays = ['일', '월', '화', '수', '목', '금', '토']
+
+  const map = {
+    월: 0,
+    화: 0,
+    수: 0,
+    목: 0,
+    금: 0,
+    토: 0,
+    일: 0,
+  }
+
+  runs.forEach((run) => {
+    const day = weekdays[new Date(run.run_date).getDay()]
+    map[day] += Number(run.distance)
+  })
+
+  return ['월', '화', '수', '목', '금', '토', '일'].map((day) => ({
+    day,
+    distance: Number(map[day].toFixed(2)),
+  }))
+}
+
 function SummaryCard({ title, value, color }) {
   return (
     <div className={`${color} rounded-2xl p-4 text-center text-white shadow`}>
@@ -212,6 +247,11 @@ function getTheme(theme) {
       header: 'bg-amber-500',
       bar: 'bg-amber-400',
       badge: 'bg-amber-50 text-amber-700',
+    },
+    emerald: {
+      header: 'bg-emerald-600',
+      bar: 'bg-emerald-500',
+      badge: 'bg-emerald-50 text-emerald-700',
     },
   }
 
@@ -241,7 +281,9 @@ function BarSection({ title, subtitle, data, valueKey, labelKey, unit, theme }) 
               return (
                 <div key={`${item[labelKey]}-${index}`}>
                   <div className="mb-1 flex items-center justify-between text-sm">
-                    <span className="font-bold text-slate-700">{item[labelKey]}</span>
+                    <span className="font-bold text-slate-700">
+                      {item[labelKey]}
+                    </span>
                     <span className={`rounded-full px-2 py-1 text-xs font-extrabold ${style.badge}`}>
                       {value}{unit}
                     </span>
