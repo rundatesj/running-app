@@ -7,6 +7,21 @@ import { supabase } from '../lib/supabase'
 const CHALLENGE_START = '2026-05-01'
 const CHALLENGE_END = '2026-05-31'
 
+const successMessages = [
+  {
+    title: '저장완료🏃‍♂️🏃‍♀️',
+    text: '오늘 나 꽤 멋있다😎',
+  },
+  {
+    title: '기록 저장 완료🔥',
+    text: '이제 누워도 합법🛌',
+  },
+  {
+    title: '오늘도 해냈다💪',
+    text: '작은 습관이 큰 변화를 만들어요❤️',
+  },
+]
+
 function formatDate(date) {
   const yyyy = date.getFullYear()
   const mm = String(date.getMonth() + 1).padStart(2, '0')
@@ -27,6 +42,7 @@ export default function Home() {
   const [runDate, setRunDate] = useState(getDefaultDate())
   const [distance, setDistance] = useState('')
   const [saving, setSaving] = useState(false)
+  const [successMessage, setSuccessMessage] = useState(null)
 
   const maxDate = getDefaultDate()
 
@@ -85,7 +101,11 @@ export default function Home() {
       return
     }
 
-    alert('저장 완료!')
+    const random =
+      successMessages[Math.floor(Math.random() * successMessages.length)]
+
+    setSuccessMessage(random)
+
     setMemberId('')
     setRunDate(getDefaultDate())
     setDistance('')
@@ -93,6 +113,27 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-slate-100 to-blue-50 p-4">
+      {successMessage && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
+          <div className="w-full max-w-sm rounded-2xl bg-white p-6 text-center shadow-2xl">
+            <div className="mb-2 text-2xl font-extrabold text-slate-900">
+              {successMessage.title}
+            </div>
+
+            <div className="mb-5 text-base font-bold text-slate-600">
+              {successMessage.text}
+            </div>
+
+            <button
+              onClick={() => setSuccessMessage(null)}
+              className="w-full rounded-xl bg-blue-600 p-3 font-extrabold text-white shadow"
+            >
+              확인
+            </button>
+          </div>
+        </div>
+      )}
+
       <div className="mx-auto max-w-md">
         <div className="mb-5">
           <h1 className="text-2xl font-extrabold text-slate-900">
@@ -106,7 +147,9 @@ export default function Home() {
         <div className="overflow-hidden rounded-2xl bg-white shadow">
           <div className="bg-blue-600 px-5 py-4 text-white">
             <h2 className="text-lg font-extrabold">러닝 기록 입력</h2>
-            <p className="mt-1 text-sm opacity-90">5월 1일 ~ 5월 31일 기록만 입력 가능</p>
+            <p className="mt-1 text-sm opacity-90">
+              5월 1일 ~ 5월 31일 기록만 입력 가능
+            </p>
           </div>
 
           <div className="p-5">
@@ -152,19 +195,26 @@ export default function Home() {
               {saving ? '저장 중...' : '기록 저장'}
             </button>
 
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-3 gap-2">
               <Link
                 href="/dashboard"
                 className="rounded-xl bg-blue-600 p-3 text-center font-bold text-white shadow"
               >
-                순위 보기
+                순위
               </Link>
 
               <Link
                 href="/history"
-                className="rounded-xl bg-white p-3 text-center font-bold text-slate-700 shadow border"
+                className="rounded-xl border bg-white p-3 text-center font-bold text-slate-700 shadow"
               >
-                누적 기록
+                누적
+              </Link>
+
+              <Link
+                href="/stats"
+                className="rounded-xl border bg-white p-3 text-center font-bold text-slate-700 shadow"
+              >
+                통계
               </Link>
             </div>
           </div>
