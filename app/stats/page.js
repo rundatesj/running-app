@@ -22,14 +22,12 @@ export default function StatsPage() {
   }
 
   const dailyDistance = makeDailyDistance(runs)
-  const personalDistance = makePersonalDistance(runs)
-  const attendanceRanking = makeAttendanceRanking(runs)
   const dailyParticipants = makeDailyParticipants(runs)
 
   const totalDistance = runs.reduce((sum, r) => sum + Number(r.distance), 0)
   const totalRecords = runs.length
   const avgDistance = totalRecords ? totalDistance / totalRecords : 0
-const crewLevel = getCrewLevel(totalDistance)
+  const crewLevel = getCrewLevel(totalDistance)
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-slate-100 to-blue-50 p-4">
@@ -43,6 +41,92 @@ const crewLevel = getCrewLevel(totalDistance)
               5월 러닝 챌린지 기록을 그래프로 확인합니다.
             </p>
           </div>
+
+          <div className="flex gap-2">
+            <Link href="/" className="rounded-xl bg-white px-4 py-2 text-sm font-bold text-slate-700 shadow">
+              기록 입력
+            </Link>
+            <Link href="/dashboard" className="rounded-xl bg-white px-4 py-2 text-sm font-bold text-slate-700 shadow">
+              대시보드
+            </Link>
+            <Link href="/history" className="rounded-xl bg-slate-900 px-4 py-2 text-sm font-bold text-white shadow">
+              누적 기록
+            </Link>
+          </div>
+        </div>
+
+        <div className="mb-6 grid grid-cols-3 gap-3">
+          <SummaryCard title="총 거리" value={`${totalDistance.toFixed(2)}km`} color="bg-violet-600" />
+          <SummaryCard title="총 기록" value={`${totalRecords}건`} color="bg-blue-600" />
+          <SummaryCard title="평균 거리" value={`${avgDistance.toFixed(2)}km`} color="bg-emerald-600" />
+        </div>
+
+        <div className="mb-6 overflow-hidden rounded-2xl bg-white shadow">
+          <div className="bg-slate-900 px-5 py-4 text-white">
+            <div className="text-sm font-bold opacity-90">🏆 크루 누적 레벨</div>
+            <div className="mt-2 text-2xl font-extrabold">
+              LV.{crewLevel.level} {crewLevel.name}
+            </div>
+            <div className="mt-1 text-sm opacity-90">
+              우리가 함께 달린 거리 {totalDistance.toFixed(2)}km
+            </div>
+          </div>
+
+          <div className="p-5">
+            <div className="mb-2 flex justify-between text-sm font-bold text-slate-700">
+              <span>다음 레벨 진행률</span>
+              <span>{crewLevel.progress.toFixed(1)}%</span>
+            </div>
+
+            <div className="mb-4 h-4 overflow-hidden rounded-full bg-slate-100">
+              <div
+                className="h-full rounded-full bg-gradient-to-r from-blue-500 to-violet-500"
+                style={{ width: `${crewLevel.progress}%` }}
+              />
+            </div>
+
+            <div className="grid grid-cols-2 gap-3">
+              <div className="rounded-xl bg-blue-50 p-4 text-center">
+                <div className="text-sm font-bold text-blue-700">운동장</div>
+                <div className="mt-1 text-xl font-extrabold text-blue-900">
+                  {crewLevel.trackLaps.toFixed(0)}바퀴
+                </div>
+              </div>
+
+              <div className="rounded-xl bg-violet-50 p-4 text-center">
+                <div className="text-sm font-bold text-violet-700">다음 레벨까지</div>
+                <div className="mt-1 text-xl font-extrabold text-violet-900">
+                  {crewLevel.remain.toFixed(1)}km
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <BarSection
+          title="날짜별 전체 거리"
+          subtitle="날짜별 크루 전체 누적 거리"
+          data={dailyDistance}
+          valueKey="distance"
+          labelKey="date"
+          unit="km"
+          theme="violet"
+        />
+
+        <BarSection
+          title="날짜별 참여자 수"
+          subtitle="날짜별 기록을 남긴 인원 수"
+          data={dailyParticipants}
+          valueKey="participants"
+          labelKey="date"
+          unit="명"
+          theme="amber"
+        />
+      </div>
+    </main>
+  )
+}
+
 function getCrewLevel(totalDistance) {
   const levels = [
     { level: 1, name: '워밍업', min: 0, max: 200 },
@@ -65,9 +149,7 @@ function getCrewLevel(totalDistance) {
       ? 100
       : ((totalDistance - current.min) / (current.max - current.min)) * 100
 
-  const remain =
-    current.max === null ? 0 : current.max - totalDistance
-
+  const remain = current.max === null ? 0 : current.max - totalDistance
   const trackLaps = totalDistance / 0.4
 
   return {
@@ -77,76 +159,12 @@ function getCrewLevel(totalDistance) {
     trackLaps,
   }
 }
-          <div className="flex gap-2">
-            <Link href="/" className="rounded-xl bg-white px-4 py-2 text-sm font-bold text-slate-700 shadow">
-              기록 입력
-            </Link>
-            <Link href="/dashboard" className="rounded-xl bg-white px-4 py-2 text-sm font-bold text-slate-700 shadow">
-              대시보드
-            </Link>
-            <Link href="/history" className="rounded-xl bg-slate-900 px-4 py-2 text-sm font-bold text-white shadow">
-              누적 기록
-            </Link>
-          </div>
-        </div>
-
-        <div className="mb-6 grid grid-cols-3 gap-3">
-          <SummaryCard title="총 거리" value={`${totalDistance.toFixed(2)}km`} color="bg-violet-600" />
-          <SummaryCard title="총 기록" value={`${totalRecords}건`} color="bg-blue-600" />
-          <SummaryCard title="평균 거리" value={`${avgDistance.toFixed(2)}km`} color="bg-emerald-600" />
-        </div>
-
-        <BarSection
-          title="날짜별 전체 거리"
-          subtitle="날짜별 크루 전체 누적 거리"
-          data={dailyDistance}
-          valueKey="distance"
-          labelKey="date"
-          unit="km"
-          theme="violet"
-        />
-
-        <BarSection
-          title="개인별 누적거리 TOP10"
-          subtitle="5월 전체 누적거리 기준"
-          data={personalDistance.slice(0, 10)}
-          valueKey="distance"
-          labelKey="name"
-          unit="km"
-          theme="blue"
-        />
-
-        <BarSection
-          title="출석일수 TOP10"
-          subtitle="러닝 기록이 있는 날짜 수 기준"
-          data={attendanceRanking.slice(0, 10)}
-          valueKey="attendance"
-          labelKey="name"
-          unit="일"
-          theme="emerald"
-        />
-
-        <BarSection
-          title="날짜별 참여자 수"
-          subtitle="날짜별 기록을 남긴 인원 수"
-          data={dailyParticipants}
-          valueKey="participants"
-          labelKey="date"
-          unit="명"
-          theme="amber"
-        />
-      </div>
-    </main>
-  )
-}
 
 function makeDailyDistance(runs) {
   const map = {}
 
   runs.forEach((run) => {
-    if (!map[run.run_date]) {
-      map[run.run_date] = 0
-    }
+    if (!map[run.run_date]) map[run.run_date] = 0
     map[run.run_date] += Number(run.distance)
   })
 
@@ -158,51 +176,11 @@ function makeDailyDistance(runs) {
     .sort((a, b) => a.date.localeCompare(b.date))
 }
 
-function makePersonalDistance(runs) {
-  const map = {}
-
-  runs.forEach((run) => {
-    const name = run.members?.name || '이름없음'
-    if (!map[name]) {
-      map[name] = 0
-    }
-    map[name] += Number(run.distance)
-  })
-
-  return Object.entries(map)
-    .map(([name, distance]) => ({
-      name,
-      distance: Number(distance.toFixed(2)),
-    }))
-    .sort((a, b) => b.distance - a.distance)
-}
-
-function makeAttendanceRanking(runs) {
-  const map = {}
-
-  runs.forEach((run) => {
-    const name = run.members?.name || '이름없음'
-    if (!map[name]) {
-      map[name] = new Set()
-    }
-    map[name].add(run.run_date)
-  })
-
-  return Object.entries(map)
-    .map(([name, dates]) => ({
-      name,
-      attendance: dates.size,
-    }))
-    .sort((a, b) => b.attendance - a.attendance)
-}
-
 function makeDailyParticipants(runs) {
   const map = {}
 
   runs.forEach((run) => {
-    if (!map[run.run_date]) {
-      map[run.run_date] = new Set()
-    }
+    if (!map[run.run_date]) map[run.run_date] = new Set()
     map[run.run_date].add(run.member_id)
   })
 
@@ -230,16 +208,6 @@ function getTheme(theme) {
       bar: 'bg-violet-500',
       badge: 'bg-violet-50 text-violet-700',
     },
-    blue: {
-      header: 'bg-blue-600',
-      bar: 'bg-blue-500',
-      badge: 'bg-blue-50 text-blue-700',
-    },
-    emerald: {
-      header: 'bg-emerald-600',
-      bar: 'bg-emerald-500',
-      badge: 'bg-emerald-50 text-emerald-700',
-    },
     amber: {
       header: 'bg-amber-500',
       bar: 'bg-amber-400',
@@ -247,7 +215,7 @@ function getTheme(theme) {
     },
   }
 
-  return themes[theme] || themes.blue
+  return themes[theme] || themes.violet
 }
 
 function BarSection({ title, subtitle, data, valueKey, labelKey, unit, theme }) {
@@ -273,10 +241,7 @@ function BarSection({ title, subtitle, data, valueKey, labelKey, unit, theme }) 
               return (
                 <div key={`${item[labelKey]}-${index}`}>
                   <div className="mb-1 flex items-center justify-between text-sm">
-                    <span className="font-bold text-slate-700">
-                      {labelKey === 'name' ? `${index + 1}위 ` : ''}
-                      {item[labelKey]}
-                    </span>
+                    <span className="font-bold text-slate-700">{item[labelKey]}</span>
                     <span className={`rounded-full px-2 py-1 text-xs font-extrabold ${style.badge}`}>
                       {value}{unit}
                     </span>
