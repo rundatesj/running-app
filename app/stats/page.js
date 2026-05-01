@@ -29,6 +29,7 @@ export default function StatsPage() {
   const totalDistance = runs.reduce((sum, r) => sum + Number(r.distance), 0)
   const totalRecords = runs.length
   const avgDistance = totalRecords ? totalDistance / totalRecords : 0
+const crewLevel = getCrewLevel(totalDistance)
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-slate-100 to-blue-50 p-4">
@@ -42,7 +43,40 @@ export default function StatsPage() {
               5월 러닝 챌린지 기록을 그래프로 확인합니다.
             </p>
           </div>
+function getCrewLevel(totalDistance) {
+  const levels = [
+    { level: 1, name: '워밍업', min: 0, max: 200 },
+    { level: 2, name: '러닝 시작', min: 200, max: 500 },
+    { level: 3, name: '중독 단계', min: 500, max: 1000 },
+    { level: 4, name: '크루 각성', min: 1000, max: 2000 },
+    { level: 5, name: '괴물 집단', min: 2000, max: 3000 },
+    { level: 6, name: '인간 아님', min: 3000, max: null },
+  ]
 
+  const current =
+    levels.find((item) =>
+      item.max === null
+        ? totalDistance >= item.min
+        : totalDistance >= item.min && totalDistance < item.max
+    ) || levels[0]
+
+  const progress =
+    current.max === null
+      ? 100
+      : ((totalDistance - current.min) / (current.max - current.min)) * 100
+
+  const remain =
+    current.max === null ? 0 : current.max - totalDistance
+
+  const trackLaps = totalDistance / 0.4
+
+  return {
+    ...current,
+    progress: Math.min(100, Math.max(0, progress)),
+    remain: Math.max(0, remain),
+    trackLaps,
+  }
+}
           <div className="flex gap-2">
             <Link href="/" className="rounded-xl bg-white px-4 py-2 text-sm font-bold text-slate-700 shadow">
               기록 입력
