@@ -216,6 +216,12 @@ export default function Home() {
               >
                 통계
               </Link>
+<Link
+  href="/fair"
+  className="rounded-xl bg-white p-3 text-center font-bold text-slate-700 shadow border"
+>
+  랭킹
+</Link>
             </div>
           </div>
         </div>

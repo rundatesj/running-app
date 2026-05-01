@@ -53,6 +53,12 @@ export default function StatsPage() {
             <Link href="/history" className="rounded-xl bg-slate-900 px-4 py-2 text-sm font-bold text-white shadow">
               누적 기록
             </Link>
+<Link
+  href="/fair"
+  className="rounded-xl bg-white px-4 py-2 text-sm font-bold text-slate-700 shadow"
+>
+  랭킹
+</Link>
           </div>
         </div>
 

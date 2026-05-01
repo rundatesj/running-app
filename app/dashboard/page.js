@@ -223,6 +223,12 @@ const risingRanking = weekRanking
   <a href="/stats" className="rounded-xl bg-slate-900 px-4 py-2 text-sm font-bold text-white shadow">
     통계
   </a>
+<a
+  href="/fair"
+  className="rounded-xl bg-white px-4 py-2 text-sm font-bold text-slate-700 shadow"
+>
+  랭킹
+</a>
 </div>
         </div>
 
