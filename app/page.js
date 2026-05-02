@@ -195,34 +195,27 @@ export default function Home() {
               {saving ? '저장 중...' : '기록 저장'}
             </button>
 
-            <div className="grid grid-cols-3 gap-2">
-              <Link
-                href="/dashboard"
-                className="rounded-xl bg-blue-600 p-3 text-center font-bold text-white shadow"
-              >
-                순위
-              </Link>
+<div className="grid grid-cols-5 gap-2">
+  <a href="/" className="rounded-xl bg-blue-100 px-3 py-2 text-center text-sm font-extrabold text-blue-700 shadow">
+    기록입력
+  </a>
 
-              <Link
-                href="/history"
-                className="rounded-xl border bg-white p-3 text-center font-bold text-slate-700 shadow"
-              >
-                누적
-              </Link>
+  <a href="/dashboard" className="rounded-xl bg-emerald-100 px-3 py-2 text-center text-sm font-extrabold text-emerald-700 shadow">
+    순위
+  </a>
 
-              <Link
-                href="/stats"
-                className="rounded-xl border bg-white p-3 text-center font-bold text-slate-700 shadow"
-              >
-                통계
-              </Link>
-<Link
-  href="/fair"
-  className="rounded-xl bg-white p-3 text-center font-bold text-slate-700 shadow border"
->
-  랭킹
-</Link>
-            </div>
+  <a href="/history" className="rounded-xl bg-violet-100 px-3 py-2 text-center text-sm font-extrabold text-violet-700 shadow">
+    누적기록
+  </a>
+
+  <a href="/stats" className="rounded-xl bg-amber-100 px-3 py-2 text-center text-sm font-extrabold text-amber-700 shadow">
+    통계
+  </a>
+
+  <a href="/fair" className="rounded-xl bg-rose-100 px-3 py-2 text-center text-sm font-extrabold text-rose-700 shadow">
+    랭킹
+  </a>
+</div>
           </div>
         </div>
       </div>
