@@ -150,6 +150,12 @@ export default function Home() {
       )}
 
       <div className="mx-auto max-w-md">
+        <img
+          src="/birthday-banner.png"
+          alt="5월 14일 생일 축하 배너"
+          className="mb-5 w-full rounded-2xl shadow-lg"
+        />
+
         <div className="mb-5">
           <h1 className="text-2xl font-extrabold text-slate-900">
             5월 마일리지 대전 개인전
