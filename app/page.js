@@ -29,10 +29,24 @@ function formatDate(date) {
   return `${yyyy}-${mm}-${dd}`
 }
 
+function getTodayDate() {
+  return formatDate(new Date())
+}
+
 function getDefaultDate() {
-  const today = formatDate(new Date())
+  const today = getTodayDate()
+
   if (today < CHALLENGE_START) return CHALLENGE_START
   if (today > CHALLENGE_END) return CHALLENGE_END
+
+  return today
+}
+
+function getMaxDate() {
+  const today = getTodayDate()
+
+  if (today > CHALLENGE_END) return CHALLENGE_END
+
   return today
 }
 
@@ -44,7 +58,7 @@ export default function Home() {
   const [saving, setSaving] = useState(false)
   const [successMessage, setSuccessMessage] = useState(null)
 
-  const maxDate = getDefaultDate()
+  const maxDate = getMaxDate()
 
   useEffect(() => {
     fetchMembers()
@@ -66,6 +80,7 @@ export default function Home() {
 
   function handleDistanceChange(e) {
     const value = e.target.value
+
     if (/^\d*\.?\d{0,2}$/.test(value)) {
       setDistance(value)
     }
@@ -153,7 +168,10 @@ export default function Home() {
           </div>
 
           <div className="p-5">
-            <label className="mb-1 block font-bold text-slate-700">이름</label>
+            <label className="mb-1 block font-bold text-slate-700">
+              이름
+            </label>
+
             <select
               className="mb-4 w-full rounded-xl border border-blue-100 bg-blue-50 p-3 outline-none"
               value={memberId}
@@ -167,7 +185,10 @@ export default function Home() {
               ))}
             </select>
 
-            <label className="mb-1 block font-bold text-slate-700">일자</label>
+            <label className="mb-1 block font-bold text-slate-700">
+              일자
+            </label>
+
             <input
               type="date"
               className="mb-4 w-full rounded-xl border border-emerald-100 bg-emerald-50 p-3 outline-none"
@@ -177,7 +198,10 @@ export default function Home() {
               onChange={(e) => setRunDate(e.target.value)}
             />
 
-            <label className="mb-1 block font-bold text-slate-700">거리 km</label>
+            <label className="mb-1 block font-bold text-slate-700">
+              거리 km
+            </label>
+
             <input
               type="text"
               inputMode="decimal"
@@ -195,27 +219,42 @@ export default function Home() {
               {saving ? '저장 중...' : '기록 저장'}
             </button>
 
-<div className="grid grid-cols-5 gap-2">
-  <a href="/" className="rounded-xl bg-blue-100 px-3 py-2 text-center text-sm font-extrabold text-blue-700 shadow">
-    기록입력
-  </a>
+            <div className="grid grid-cols-5 gap-2">
+              <Link
+                href="/"
+                className="rounded-xl bg-blue-100 px-3 py-2 text-center text-sm font-extrabold text-blue-700 shadow"
+              >
+                기록입력
+              </Link>
 
-  <a href="/dashboard" className="rounded-xl bg-emerald-100 px-3 py-2 text-center text-sm font-extrabold text-emerald-700 shadow">
-    순위
-  </a>
+              <Link
+                href="/dashboard"
+                className="rounded-xl bg-emerald-100 px-3 py-2 text-center text-sm font-extrabold text-emerald-700 shadow"
+              >
+                순위
+              </Link>
 
-  <a href="/history" className="rounded-xl bg-violet-100 px-3 py-2 text-center text-sm font-extrabold text-violet-700 shadow">
-    누적기록
-  </a>
+              <Link
+                href="/history"
+                className="rounded-xl bg-violet-100 px-3 py-2 text-center text-sm font-extrabold text-violet-700 shadow"
+              >
+                누적기록
+              </Link>
 
-  <a href="/stats" className="rounded-xl bg-amber-100 px-3 py-2 text-center text-sm font-extrabold text-amber-700 shadow">
-    통계
-  </a>
+              <Link
+                href="/stats"
+                className="rounded-xl bg-amber-100 px-3 py-2 text-center text-sm font-extrabold text-amber-700 shadow"
+              >
+                통계
+              </Link>
 
-  <a href="/fair" className="rounded-xl bg-rose-100 px-3 py-2 text-center text-sm font-extrabold text-rose-700 shadow">
-    랭킹
-  </a>
-</div>
+              <Link
+                href="/fair"
+                className="rounded-xl bg-rose-100 px-3 py-2 text-center text-sm font-extrabold text-rose-700 shadow"
+              >
+                랭킹
+              </Link>
+            </div>
           </div>
         </div>
       </div>
