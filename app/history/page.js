@@ -62,6 +62,12 @@ export default function History() {
   return (
     <main className="min-h-screen bg-gradient-to-b from-slate-100 to-blue-50 p-4">
       <div className="mx-auto max-w-3xl">
+<img
+  src="/birthday-banner.png"
+  alt="5월 14일 생일 축하 배너"
+  className="mb-5 w-full rounded-2xl shadow-lg"
+/>
+    
         <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
           <div>
             <h1 className="text-2xl font-extrabold text-slate-900">
