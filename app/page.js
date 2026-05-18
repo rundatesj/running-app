@@ -53,15 +53,18 @@ function getMaxDate() {
 export default function Home() {
   const [members, setMembers] = useState([])
   const [memberId, setMemberId] = useState('')
-  const [runDate, setRunDate] = useState(getDefaultDate())
+  const [runDate, setRunDate] = useState('')
   const [distance, setDistance] = useState('')
   const [saving, setSaving] = useState(false)
   const [successMessage, setSuccessMessage] = useState(null)
-
-  const maxDate = getMaxDate()
+  const [maxDate, setMaxDate] = useState(CHALLENGE_END)
 
   useEffect(() => {
     fetchMembers()
+
+    const todayMaxDate = getMaxDate()
+    setMaxDate(todayMaxDate)
+    setRunDate(todayMaxDate)
   }, [])
 
   async function fetchMembers() {
@@ -122,7 +125,7 @@ export default function Home() {
     setSuccessMessage(random)
 
     setMemberId('')
-    setRunDate(getDefaultDate())
+    setRunDate(getMaxDate())
     setDistance('')
   }
 
