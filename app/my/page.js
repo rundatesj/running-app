@@ -1,71 +1,67 @@
-"use client";
+return (
+  <main className="min-h-screen p-4">
 
-import { useEffect, useState } from "react";
+    <h1 className="mb-4 text-2xl font-extrabold">
+      개인 러닝 리포트
+    </h1>
 
-export default function MyPage() {
-  const [records, setRecords] = useState([]);
-  const [selectedName, setSelectedName] = useState("");
+    <select
+      value={selectedName}
+      onChange={(e)=>setSelectedName(e.target.value)}
+      className="mb-5 w-full rounded-xl border p-3"
+    >
+      <option value="">
+        닉네임 선택
+      </option>
 
-  useEffect(() => {
-    // 기존에 dashboard/stats에서 쓰던 데이터 불러오는 코드 그대로 가져오기
-  }, []);
+      {names.map(name => (
+        <option key={name} value={name}>
+          {name}
+        </option>
+      ))}
+    </select>
 
-  const names = [...new Set(records.map(item => item.nickname))];
+    {selectedName && (
+      <>
+        <div className="grid grid-cols-3 gap-3">
 
-  const myRecords = records.filter(
-    item => item.nickname === selectedName
-  );
+          <Card
+            title="누적거리"
+            value={`${totalDistance.toFixed(1)}km`}
+          />
 
-  const totalDistance = myRecords.reduce(
-    (sum, item) => sum + Number(item.distance || 0),
-    0
-  );
+          <Card
+            title="출석일수"
+            value={`${attendance}일`}
+          />
 
-  return (
-    <main>
-      <h1>나의 러닝 기록</h1>
+          <Card
+            title="최장거리"
+            value={`${maxDistance}km`}
+          />
 
-      <select
-        value={selectedName}
-        onChange={(e) => setSelectedName(e.target.value)}
-      >
-        <option value="">닉네임을 선택하세요</option>
-        {names.map(name => (
-          <option key={name} value={name}>
-            {name}
-          </option>
-        ))}
-      </select>
+        </div>
 
-      {selectedName && (
-        <>
-          <h2>{selectedName}님의 기록</h2>
+        <div className="mt-5 rounded-2xl bg-white p-4 shadow">
 
-          <div>
-            <p>누적거리: {totalDistance.toFixed(1)}km</p>
-            <p>출석일수: {myRecords.length}일</p>
-          </div>
+          <h2 className="mb-3 font-bold">
+            러닝 기록
+          </h2>
 
-          <table>
-            <thead>
-              <tr>
-                <th>날짜</th>
-                <th>거리</th>
-                <th>시간</th>
-              </tr>
-            </thead>
-            <tbody>
-              {myRecords.map((record, index) => (
-                <tr key={index}>
-                  <td>{record.date}</td>
-                  <td>{record.distance}km</td>
-                  <td>{record.time}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </>
-      )}
-    </main>
-  );
-}
+          {myRuns.map((run, idx) => (
+            <div
+              key={idx}
+              className="flex justify-between border-b py-2"
+            >
+              <span>{run.run_date}</span>
+              <span>{run.distance}km</span>
+            </div>
+          ))}
+
+        </div>
+
+      </>
+    )}
+
+  </main>
+)
