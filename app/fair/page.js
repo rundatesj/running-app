@@ -39,7 +39,7 @@ export default function FairRankingPage() {
             </p>
           </div>
 
-<div className="grid grid-cols-5 gap-2">
+<div className="grid grid-cols-6 gap-2">
   <a href="/" className="rounded-xl bg-blue-100 px-3 py-2 text-center text-sm font-extrabold text-blue-700 shadow">
     기록입력
   </a>
@@ -59,6 +59,9 @@ export default function FairRankingPage() {
   <a href="/fair" className="rounded-xl bg-rose-100 px-3 py-2 text-center text-sm font-extrabold text-rose-700 shadow">
     랭킹
   </a>
+    <a href="/my" className="rounded-xl bg-cyan-100 px-3 py-2 text-center text-sm font-extrabold text-cyan-700 shadow">
+  내기록
+</a>
 </div>
         </div>
 
